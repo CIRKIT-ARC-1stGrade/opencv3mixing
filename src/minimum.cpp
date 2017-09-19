@@ -20,10 +20,10 @@ public:
   void imageCb(const sensor_msgs::ImageConstPtr& msg)
   {
     try {
-      cv::Mat cv_mask;
       cv_bridge::CvImagePtr cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+      cv_bridge::CvImagePtr cv_mask = cv_bridge::toCvCopy(msg,sensor_msgs::image_encodings::BGR8);
 
-      cv::inRange(cv_ptr->image, cv::Scalar(0, 0, 150), cv::Scalar(110, 165, 255), cv_mask); //オレンジ色検出
+      cv::inRange(cv_ptr->image, cv::Scalar(0, 0, 150), cv::Scalar(110, 165, 255), cv_mask->image); //オレンジ色検出
 
       image_pub_.publish(cv_mask->toImageMsg()); //cv_maskの方をパブリッシュ
     }
